@@ -9,6 +9,6 @@ namespace Domain.IRepository
 {
     public interface IGenerate
     {
-        public void GeneratePdf(DocumentGenerateModels models);
+        public ApiResponse GeneratePdf(DocumentGenerateModels models);
     }
 }

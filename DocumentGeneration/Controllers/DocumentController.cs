@@ -17,9 +17,9 @@ namespace DocumentGeneration.Controllers
         [HttpPost("GenerateDocument")]
         public IActionResult GenerateDocument(DocumentGenerateModels documentGenerateModels)
         {
-            _generate.GeneratePdf(documentGenerateModels);
+           var result= _generate.GeneratePdf(documentGenerateModels);
 
-            return Ok(documentGenerateModels);
+            return Ok(result);
         }
 
     }

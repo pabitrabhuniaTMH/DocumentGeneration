@@ -9,7 +9,7 @@ namespace Domain.IRepository
 {
     public interface ITemplate
     {
-        public object SaveTemplate(TemplateModel template);
+        public ApiResponse SaveTemplate(TemplateModel template);
         public TemplateCollection GetTemplateByType(string templateType);
     }
 }

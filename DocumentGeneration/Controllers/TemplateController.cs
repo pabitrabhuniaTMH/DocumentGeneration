@@ -1,6 +1,5 @@
 ﻿using Domain.IRepository;
 using Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentGeneration.Controllers
@@ -16,9 +15,9 @@ namespace DocumentGeneration.Controllers
         }
         [HttpPost("SaveTemplate")]
         public IActionResult SaveTemplate(TemplateModel template)
-        {
-            
-            return Ok(_template.SaveTemplate(template));
+        {          
+            var Results= Ok(_template.SaveTemplate(template));
+            return Ok(Results);
         }
     }
 }

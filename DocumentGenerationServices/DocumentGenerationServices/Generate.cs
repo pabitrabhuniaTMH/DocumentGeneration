@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SixLabors.ImageSharp;
 using Spire.Pdf.Security;
+using System.Net;
 
 namespace Application.DocumentGenerationServices
 {
@@ -23,7 +24,7 @@ namespace Application.DocumentGenerationServices
             _certificate = configuration.GetSection("Document:Certificate").Value;
             _password = configuration.GetSection("Document:Password").Value;
         }
-        public void GeneratePdf(DocumentGenerateModels models)
+        public ApiResponse GeneratePdf(DocumentGenerateModels models)
         {
             try
             {
@@ -33,7 +34,7 @@ namespace Application.DocumentGenerationServices
                 var templateVariable = templateDbValue.TemplateVariable;
                 var a = ConvertStringToObjectVariable(templateVariable!);
                 string templateBody = Aes256.Decrypt(templateDbValue.Template!.ToString());
-                foreach (KeyValuePair<string, object> value in placeholder!)
+                foreach(KeyValuePair<string, object> value in placeholder!)
                 {
                     if (a.Any(x => x.Variable == value.Key))
                         templateBody = templateBody.Replace(value.Key, value.Value.ToString());
@@ -112,11 +113,21 @@ namespace Application.DocumentGenerationServices
                     };
                     signatureMaker.MakeSignature("signName", doc.Pages[^1], 50, 725, 200, 70, appearance);
                 }               
-                doc.SaveToFile(@"C:\Users\Pabitra Bhunia\Desktop\PDF Generate\output.pdf");                
+                doc.SaveToFile(@"C:\Users\Pabitra Bhunia\Desktop\PDF Generate\output.pdf");
+                return new ApiResponse
+                {
+                    Id=TimeStamp.GetTimeStamp(),StatusCode=HttpStatusCode.OK,Status="Success",Message="Document has been successfully saved"
+                };
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                return new ApiResponse
+                {
+                    Id = TimeStamp.GetTimeStamp(),
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Status = "Failed",
+                    Message = ex.Message
+                };          
             }
             
         }
