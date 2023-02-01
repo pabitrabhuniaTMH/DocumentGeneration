@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentGeneration.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v0.0.1/[controller]")]
     [ApiController]
     public class TemplateController : ControllerBase
     {
